@@ -13,6 +13,11 @@ fs.readdirSync(targetDir).forEach(function(fn){
   }
 });
 
+// Copy over fresh base test
+fs.createReadStream(__dirname + '/../base/image.html')
+  .pipe(fs.createWriteStream(targetDir + '1_chunks.html'));
+
+// Generate templated codes
 var template = Handlebars.compile(templateStr);
 
 var dimensions = ['2x2', '4x2', '4x3', '4x4', '5x4', '6x4'];
