@@ -8,12 +8,12 @@ if [ -f "$3/output/output_$2_chunks.csv" ]; then
     rm "$3/output/output_$2_chunks.csv"
 fi
 
-phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
+phantomas "http://localhost/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv > tmp.csv
 echo "Finished 1..."
 
 for i in $(seq 2 $1)
 do
-  phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv:no-header >> tmp.csv
+  phantomas "http://localhost/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv:no-header >> tmp.csv
   echo "Finished $i..."
 done
 

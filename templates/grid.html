@@ -17,23 +17,15 @@
 </head>
 <body>
   <table>
+    {{#each dimensions}}
     <tr>
+      {{#each this.row}}
       <td>
-        <img src="4-chunks/chunk_0.png" height="480" width="960">
+        <img src="{{../../numOfChunks}}_chunks/{{this}}.png">
       </td>
-      <td>
-        <img src="4-chunks/chunk_1.png" height="480" width="960">
-      </td>
+      {{/each}}
     </tr>
-
-    <tr>
-      <td>
-        <img src="4-chunks/chunk_2.png" height="480" width="960">
-      </td>
-      <td>
-        <img src="4-chunks/chunk_3.png" height="480" width="960">
-      </td>
-    </tr>
+    {{/each}}
   </table>
 </body>
 </html>

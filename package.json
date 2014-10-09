@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "handlebars": "^2.0.0"
+    "handlebars": "^2.0.0",
+    "imagemagick": "^0.1.3"
   }
 }

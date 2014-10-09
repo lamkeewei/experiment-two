@@ -21,7 +21,7 @@
 
         if (chunks_loaded >= chunks_to_load) {
           // console.log("done");
-          reassembleImage();
+          reassembleText();
         }
     }
 
@@ -44,15 +44,19 @@
 
     }
 
-    function reassembleImage() {
+    function reassembleText() {
       var outputString = outputArray.join('');
       document.getElementById("image").src = "data:image/png;base64," + outputString;
+      var body = document.querySelector('body');
+      body.className += 'loaded';
     }
 
     // run a loop to load all chunks asynchronously
-    for (i = 0; i < chunks_to_load; i++) {
-      loadChunkbyNo(i);
-    }
+    setTimeout(function(){      
+      for (i = 0; i < chunks_to_load; i++) {
+        loadChunkbyNo(i);
+      }
+    }, 10000);
 
   </script>
 </html>
