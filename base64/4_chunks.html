@@ -4,7 +4,7 @@
   <script>
 
     // change this variable
-    var chunks_to_load = 8;
+    var chunks_to_load = 4;
 
     var chunks_loaded = 0;
 
@@ -21,7 +21,7 @@
 
         if (chunks_loaded >= chunks_to_load) {
           // console.log("done");
-          reassembleImage();          
+          reassembleImage();
         }
     }
 
@@ -29,7 +29,7 @@
 
       var req = new XMLHttpRequest();
       req.overrideMimeType('text/plain; charset=x-user-defined');
-      req.open('GET', '8_chunks/chunk' + (num+1) + '.txt', true);
+      req.open('GET', '4_chunks/chunk' + (num+1) + '.txt', true);
       req.send(null);
 
       // fire off an event when this is done loading
@@ -46,18 +46,13 @@
 
     function reassembleImage() {
       var outputString = outputArray.join('');
-      document.querySelector("body").innerHTML = outputString;
-      var body = document.querySelector('body');
-      body.className += 'loaded';
+      document.getElementById("image").src = "data:image/png;base64," + outputString;
     }
 
-    
+    // run a loop to load all chunks asynchronously
     for (i = 0; i < chunks_to_load; i++) {
       loadChunkbyNo(i);
     }
-  </script>
 
-  <body>
-    
-  </body>
+  </script>
 </html>

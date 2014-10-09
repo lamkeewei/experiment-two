@@ -4,7 +4,7 @@
   <script>
 
     // change this variable
-    var chunks_to_load = 4;
+    var chunks_to_load = {{numOfChunks}};
 
     var chunks_loaded = 0;
 
@@ -29,7 +29,7 @@
 
       var req = new XMLHttpRequest();
       req.overrideMimeType('text/plain; charset=x-user-defined');
-      req.open('GET', 'chunks/' + chunks_to_load + 'chunks/chunk' + (num+1) + '.txt', true);
+      req.open('GET', '{{numOfChunks}}_chunks/chunk' + (num+1) + '.txt', true);
       req.send(null);
 
       // fire off an event when this is done loading
@@ -50,9 +50,11 @@
     }
 
     // run a loop to load all chunks asynchronously
-    for (i = 0; i < chunks_to_load; i++) {
-      loadChunkbyNo(i);
-    }
+    setTimeout(function(){      
+      for (i = 0; i < chunks_to_load; i++) {
+        loadChunkbyNo(i);
+      }
+    }, 10000);
 
   </script>
 </html>
