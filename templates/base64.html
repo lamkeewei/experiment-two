@@ -1,0 +1,58 @@
+<html>
+  <img id="image" src="" />
+
+  <script>
+
+    // change this variable
+    var chunks_to_load = 4;
+
+    var chunks_loaded = 0;
+
+    var outputArray = new Array(chunks_to_load);
+
+    function checkAllDone() {
+
+      // first increment chunks loaded
+        chunks_loaded += 1;
+
+        // debugging stuff
+        // console.log("we are at chunk: ");
+        // console.log(chunks_loaded);
+
+        if (chunks_loaded >= chunks_to_load) {
+          // console.log("done");
+          reassembleImage();
+        }
+    }
+
+    function loadChunkbyNo(num) {
+
+      var req = new XMLHttpRequest();
+      req.overrideMimeType('text/plain; charset=x-user-defined');
+      req.open('GET', 'chunks/' + chunks_to_load + 'chunks/chunk' + (num+1) + '.txt', true);
+      req.send(null);
+
+      // fire off an event when this is done loading
+      req.onreadystatechange=function() {
+        if (req.readyState==4 && req.status==200){
+          // populate the output array at the right position
+          outputArray[num] = req.responseText;
+          // check if this was the final chunk
+          checkAllDone();
+        }
+      }
+
+    }
+
+    function reassembleImage() {
+      var outputString = outputArray.join('');
+      document.getElementById("image").src = "data:image/png;base64," + outputString;
+    }
+
+    // run a loop to load all chunks asynchronously
+    for (i = 0; i < chunks_to_load; i++) {
+      loadChunkbyNo(i);
+    }
+
+  </script>
+</html>
