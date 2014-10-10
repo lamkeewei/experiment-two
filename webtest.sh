@@ -21,7 +21,7 @@ do
 
   if [ "$3" = "grid" ]
   then
-    phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
+    phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv >> tmp.csv
   else
     phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv >> tmp.csv
   fi
