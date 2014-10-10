@@ -8,7 +8,7 @@ if [ -f "$3/output/output_$2_chunks.csv" ]; then
     rm "$3/output/output_$2_chunks.csv"
 fi
 
-if [ "$3" -eq "grid" ]
+if [ "$3" = "grid" ]
 then
   phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
 else

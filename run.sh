@@ -4,6 +4,8 @@ if [[ $# -eq 0 ]] ; then
     exit 0
 fi
 
+./webtest.sh 50 1 $1
+
 for ((i=4; i<=24; i+=4))
 do
   ./webtest.sh 50 $i $1
