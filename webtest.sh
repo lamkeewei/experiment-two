@@ -19,7 +19,7 @@ echo "Finished 1..."
 for i in $(seq 2 $1)
 do
 
-  if [ "$3" -eq "grid" ]
+  if [ "$3" = "grid" ]
   then
     phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
   else
