@@ -8,14 +8,26 @@ if [ -f "$3/output/output_$2_chunks.csv" ]; then
     rm "$3/output/output_$2_chunks.csv"
 fi
 
-phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv > tmp.csv
+if [ "$3" -eq "grid" ]
+then
+  phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
+else
+  phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv > tmp.csv
+fi
 echo "Finished 1..."
 
 for i in $(seq 2 $1)
 do
-  phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv:no-header >> tmp.csv
+
+  if [ "$3" -eq "grid" ]
+  then
+    phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted -R csv > tmp.csv
+  else
+    phantomas "http://192.168.1.1/$3/$2_chunks.html"  --modules=httpTrafficCompleted --wait-for-selector "body.loaded" -R csv > tmp.csv
+  fi
+
   echo "Finished $i..."
 done
 
-cat tmp.csv | awk -F ',' '{ print $8}' > "$3/output/output_$2_chunks.csv"
+cp tmp.csv "$3/output/output_$2_chunks.csv"
 rm tmp.csv
