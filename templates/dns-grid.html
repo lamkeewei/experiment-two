@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+    table {
+      border-collapse: collapse;     
+    }
+
+    table td {
+      padding: 0px;
+    }
+
+    table td img{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    {{#each dimensions}}
+    <tr>
+      {{#each this.row}}
+      <td>
+        <img src="{{this.domain}}{{../../numOfChunks}}_chunks/{{this.name}}.png">
+      </td>
+      {{/each}}
+    </tr>
+    {{/each}}
+  </table>
+</body>
+</html>

@@ -51,12 +51,10 @@
       body.className += 'loaded';
     }
 
-    // run a loop to load all chunks asynchronously
-    setTimeout(function(){      
-      for (i = 0; i < chunks_to_load; i++) {
-        loadChunkbyNo(i);
-      }
-    }, 10000);
+    // run a loop to load all chunks asynchronously     
+    for (i = 0; i < chunks_to_load; i++) {
+      loadChunkbyNo(i);
+    }
 
   </script>
 </html>

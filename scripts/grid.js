@@ -4,7 +4,8 @@ var fs = require('fs'),
     im = require('imagemagick'),
     Handlebars = require('handlebars'),
     picturePath = __dirname + '/../assets/picture_large.png',
-    templateStr = fs.readFileSync(__dirname + '/../templates/grid.html', 'utf8');
+    templateStr = fs.readFileSync(__dirname + '/../templates/grid.html', 'utf8'),
+    dnsTemplateStr = fs.readFileSync(__dirname + '/../templates/dns-grid.html', 'utf8');
 
 var targetDir = __dirname + '/../grid/';
 fs.readdirSync(targetDir).forEach(function(fn){
@@ -19,8 +20,9 @@ fs.createReadStream(__dirname + '/../base/image.html')
 
 // Generate templated codes
 var template = Handlebars.compile(templateStr);
+var dnsTemplate = Handlebars.compile(dnsTemplateStr);
 
-var dimensions = ['2x2', '4x2', '4x3', '4x4', '5x4', '6x4'];
+var dimensions = ['2x2', '4x2', '4x3', '4x4', '5x4', '6x4', '20x10'];
 
 dimensions.forEach(function(dimension){
   var hw = dimension.split('x'),
@@ -46,7 +48,10 @@ dimensions.forEach(function(dimension){
 
     for (var cell = 0; cell < width; cell++) {
       var name = 'chunk' + counter++;
-      rowArr.push(name);
+      rowArr.push({
+        name: name,
+        domain: 'http://' + counter + '.local.com/grid/'
+      });
     }
 
     dimensionArr.push({ row: rowArr });
@@ -59,5 +64,9 @@ dimensions.forEach(function(dimension){
 
   var results = template(context);
   var fileName = targetDir + totalChunks + '_chunks.html';  
+  fs.writeFileSync(fileName, results, 'utf8');
+
+  results = dnsTemplate(context);
+  fileName = targetDir + totalChunks + '_dns_chunks.html';  
   fs.writeFileSync(fileName, results, 'utf8');
 });
